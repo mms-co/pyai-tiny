@@ -69,22 +69,28 @@ To be more specific, cross-entropy loss is calculated as $L_{loss} = -\sum_i Z_i
 #### Fully-Connected Linear
 Knowing weights $W$ of shape `(N,M)` and biases $b$ of shape `(1,M)` were used, we look at the forward pass $Y = X W + b$.
 The model needs to learn the weight matrix $W$ and bias vector $b$, so find the derivative of each, to backpropagate the input's gradient also needs to be calculated:
+
 $$
 \frac{\partial Y}{\partial W} = X
 \frac{\partial Y}{\partial b} = 1
 \frac{\partial Y}{\partial X} = W
 $$
+
 These are of shapes `(1,N)`, `(1,M)` and `(N,M)` respectively.
 To calculate the loss gradient for the parameters, simply apply the chain rule:
+
 $$
 \frac{\partial L_{loss}}{\partial W} = \frac{\partial Y}{\partial W} \frac{\partial L_{loss}}{\partial Y} = X^T \frac{\partial L_{loss}}{\partial Y}
 \frac{\partial L_{loss}}{\partial b} = \frac{\partial Y}{\partial b} \frac{\partial L_{loss}}{\partial b} = 1 \frac{\partial L_{loss}}{\partial Y} = \frac{\partial L_{loss}}{\partial Y}
 $$
+
 Observe $X^T$, this ensures tensor shapes remain consistent, here the shapes are `(N,M)` and `(1,M)`, which match with $W$ and $b$ shapes.
 Then, backpropagate to the layer input's gradient:
+
 $$
 \frac{\partial L_{loss}}{\partial X} = \frac{\partial L_{loss}}{\partial Y} \frac{\partial Y}{\partial X} = \frac{\partial L_{loss}}{\partial Y} W^T
 $$
+
 Again, observe $W^T$. Also, the order of terms the matrix multiplications which follows $Y = X W + b$, consistent both $W$ and $X$ gradient equations. The shapes remain consistent as the gradient is `(1,N)`, same as $X$.
 
 #### SparseLinear
@@ -112,6 +118,7 @@ $\hat{m_t} = \frac{m_t}{1 - \beta1^t}$
 $\hat{v_t} = \frac{v_t}{1 - \beta2^t}$
 
 Now, update the gradients:
+
 $$
 \theta_t = \theta_{t-1} - \frac{\eta \hat{m_t}}{\sqrt{\hat{v_t}} + \epsilon}
 $$
