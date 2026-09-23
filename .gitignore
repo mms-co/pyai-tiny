@@ -1,0 +1,14 @@
+# Unnecessary extra data
+datasets/*/test/img/*
+datasets/*/test/label/*
+datasets/*/train/img/*
+datasets/*/train/label/*
+src/model_logs/*
+src/network_backup/*
+src/network_data/*
+
+__pycache__/
+
+# Keep displaying
+!src/model_logs/display.py
+!src/network_data/param_display.py
